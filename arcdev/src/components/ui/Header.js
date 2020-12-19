@@ -1,8 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import PropTypes from 'prop-types';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import PropTypes from "prop-types";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import { makeStyles } from "@material-ui/styles";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
+
+import logo from "../../assets/logo.svg";
+
+// For Inline styles with Material UI
+const useStyles = makeStyles((theme) => ({
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
+    marginBottom: "3em",
+  },
+  logo: {
+    height: "8em",
+    "&:hover": {
+      background: "transparent"
+    }
+  },
+  tabContainer: {
+    marginLeft: "auto",
+  },
+  tab: {
+    ...theme.typography.tab,
+    minWidth: 10,
+    marginLeft: "25px",
+  },
+  button: {
+    ...theme.typography.estimate,
+    borderRadius: "50px",
+    marginLeft: "50px",
+    marginRight: "25px",
+    height: "45px",
+    cursor: "pointer",
+  },
+  logoContainer:{
+    padding: 0
+  }
+}));
 
 // For Elevation
 function ElevationScroll(props) {
@@ -17,22 +57,92 @@ function ElevationScroll(props) {
   });
 }
 
+// Proptypes for ElevationScroll Function
 ElevationScroll.propTypes = {
   children: PropTypes.element.isRequired,
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
 };
 
 const Header = (props) => {
+  const [value, setValue] = useState(0);
+  const handleChange = (e, value) => {
+    setValue(value);
+  };
+  const elvisUI = useStyles();
+
+  useEffect(() => {
+    if (window.location.pathname === "/" && value !== 0) {
+      setValue(0);
+    } else if (window.location.pathname === "/services" && value !== 1) {
+      setValue(1);
+    } else if (window.location.pathname === "/revolution" && value !== 2) {
+      setValue(2);
+    } else if (window.location.pathname === "/about" && value !== 3) {
+      setValue(3);
+    } else if (window.location.pathname === "/contact" && value !== 4) {
+      setValue(4);
+    } else if (window.location.pathname === "/estimate" && value !== 5) {
+      setValue(5);
+    }
+  }, [value]);
   return (
-    <ElevationScroll>
-      <AppBar position="fixed">
-        <Toolbar>Arc Development</Toolbar>
-      </AppBar>
-    </ElevationScroll>
+    <React.Fragment>
+      <ElevationScroll>
+        <AppBar position="fixed">
+          <Toolbar disableGutters>
+            <Button disableRipple onClick={() => setValue(0)} component={Link} to="/" className={elvisUI.logoContainer}>
+              <img className={elvisUI.logo} src={logo} alt="Logo" />
+            </Button>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              className={elvisUI.tabContainer}
+            >
+              <Tab
+                component={Link}
+                to="/"
+                className={elvisUI.tab}
+                label="Home"
+              />
+              <Tab
+                component={Link}
+                to="/services"
+                className={elvisUI.tab}
+                label="Services"
+              />
+              <Tab
+                component={Link}
+                to="/revolution"
+                className={elvisUI.tab}
+                label="The Revolution"
+              />
+              <Tab
+                component={Link}
+                to="/about"
+                className={elvisUI.tab}
+                label="About Us"
+              />
+              <Tab
+                component={Link}
+                to="/contact"
+                className={elvisUI.tab}
+                label="Contact Us"
+              />
+            </Tabs>
+            <Button
+              component={Link}
+              to="/estimate"
+              variant="contained"
+              color="secondary"
+              className={elvisUI.button}
+            >
+              Free Estimate
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      <div className={elvisUI.toolbarMargin} />
+    </React.Fragment>
   );
 };
 
