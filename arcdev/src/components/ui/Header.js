@@ -8,6 +8,8 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import logo from "../../assets/logo.svg";
 
@@ -20,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     height: "8em",
     "&:hover": {
-      background: "transparent"
-    }
+      background: "transparent",
+    },
   },
   tabContainer: {
     marginLeft: "auto",
@@ -39,8 +41,20 @@ const useStyles = makeStyles((theme) => ({
     height: "45px",
     cursor: "pointer",
   },
-  logoContainer:{
-    padding: 0
+  logoContainer: {
+    padding: 0,
+  },
+  menu:{
+    backgroundColor: theme.palette.common.blue,
+    color: '#fff',
+    borderRadius: "0px",
+  },
+  menuItem:{
+    ...theme.typography.tab,
+    opacity: .7,
+    "&:hover" : {
+      opacity: 1
+    }
   }
 }));
 
@@ -63,12 +77,31 @@ ElevationScroll.propTypes = {
 };
 
 const Header = (props) => {
+  // For Routes
   const [value, setValue] = useState(0);
+
+  // For Menu
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+    setOpen(true);
+  };
+  const handleClose = (e) => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  // For Tabs
   const handleChange = (e, value) => {
     setValue(value);
   };
+
+  // Initializing custom selector for inline Material CSS.
   const elvisUI = useStyles();
 
+  // UseEffect for routes
   useEffect(() => {
     if (window.location.pathname === "/" && value !== 0) {
       setValue(0);
@@ -84,12 +117,19 @@ const Header = (props) => {
       setValue(5);
     }
   }, [value]);
+
   return (
     <React.Fragment>
       <ElevationScroll>
         <AppBar position="fixed">
           <Toolbar disableGutters>
-            <Button disableRipple onClick={() => setValue(0)} component={Link} to="/" className={elvisUI.logoContainer}>
+            <Button
+              disableRipple
+              onClick={() => setValue(0)}
+              component={Link}
+              to="/"
+              className={elvisUI.logoContainer}
+            >
               <img className={elvisUI.logo} src={logo} alt="Logo" />
             </Button>
             <Tabs
@@ -105,6 +145,9 @@ const Header = (props) => {
                 label="Home"
               />
               <Tab
+                aria-owns={anchorEl && "simple-menu"}
+                aria-haspopup={anchorEl && true}
+                onMouseOver={(e) => handleClick(e)}
                 component={Link}
                 to="/services"
                 className={elvisUI.tab}
@@ -138,6 +181,20 @@ const Header = (props) => {
             >
               Free Estimate
             </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{ onMouseLeave: handleClose }}
+              classes={{paper: elvisUI.menu}}
+              elevation={0}
+            >
+              <MenuItem component={Link} classes={{root: elvisUI.menuItem}} to='/services' onClick={() => {handleClose(); setValue(1)}}>Services</MenuItem>
+              <MenuItem component={Link} classes={{root: elvisUI.menuItem}} to='/customsoftware' onClick={() => {handleClose(); setValue(1)}}>Custom Software Development</MenuItem>
+              <MenuItem component={Link} classes={{root: elvisUI.menuItem}} to='/mobileapps' onClick={() => {handleClose(); setValue(1)}}>Mobile App Development</MenuItem>
+              <MenuItem component={Link} classes={{root: elvisUI.menuItem}} to='/websites' onClick={() => {handleClose(); setValue(1)}}>Website Development</MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
