@@ -44,18 +44,18 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     padding: 0,
   },
-  menu:{
+  menu: {
     backgroundColor: theme.palette.common.blue,
-    color: '#fff',
+    color: "#fff",
     borderRadius: "0px",
   },
-  menuItem:{
+  menuItem: {
     ...theme.typography.tab,
-    opacity: .7,
-    "&:hover" : {
-      opacity: 1
-    }
-  }
+    opacity: 0.7,
+    "&:hover": {
+      opacity: 1,
+    },
+  },
 }));
 
 // For Elevation
@@ -83,7 +83,32 @@ const Header = (props) => {
   // For Menu
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const menuOptions = [
+    {
+      name: "Services",
+      link: "/services",
+    },
+    {
+      name: "Custom Software Development",
+      link: "/customsoftware",
+    },
+    {
+      name: "Mobile App Development",
+      link: "/mobileapps",
+    },
+    {
+      name: "Website Development",
+      link: "/websites",
+    },
+  ];
+
+  const handleMenuItemClick = (e, index) => {
+    setAnchorEl(null);
+    setOpen(false);
+    setSelectedIndex(index);
+  };
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
     setOpen(true);
@@ -103,18 +128,58 @@ const Header = (props) => {
 
   // UseEffect for routes
   useEffect(() => {
-    if (window.location.pathname === "/" && value !== 0) {
-      setValue(0);
-    } else if (window.location.pathname === "/services" && value !== 1) {
-      setValue(1);
-    } else if (window.location.pathname === "/revolution" && value !== 2) {
-      setValue(2);
-    } else if (window.location.pathname === "/about" && value !== 3) {
-      setValue(3);
-    } else if (window.location.pathname === "/contact" && value !== 4) {
-      setValue(4);
-    } else if (window.location.pathname === "/estimate" && value !== 5) {
-      setValue(5);
+    switch (window.location.pathname) {
+      case "/":
+        if (value !== 0) {
+          setValue(0);
+        }
+        break;
+      case "/services":
+        if (value !== 1) {
+          setValue(1);
+          setSelectedIndex(0);
+        }
+        break;
+      case "/revolution":
+        if (value !== 2) {
+          setValue(2);
+        }
+        break;
+      case "/about":
+        if (value !== 3) {
+          setValue(3);
+        }
+        break;
+      case "/contact":
+        if (value !== 4) {
+          setValue(4);
+        }
+        break;
+      case "/estimate":
+        if (value !== 5) {
+          setValue(5);
+        }
+        break;
+      case "/customsoftware":
+        if (value !== 1) {
+          setValue(1);
+          setSelectedIndex(1);
+        }
+        break;
+      case "/mobileapps":
+        if (value !== 1) {
+          setValue(1);
+          setSelectedIndex(2);
+        }
+        break;
+      case "/websites":
+        if (value !== 1) {
+          setValue(1);
+          setSelectedIndex(3);
+        }
+        break;
+      default:
+        break;
     }
   }, [value]);
 
@@ -187,13 +252,25 @@ const Header = (props) => {
               open={open}
               onClose={handleClose}
               MenuListProps={{ onMouseLeave: handleClose }}
-              classes={{paper: elvisUI.menu}}
+              classes={{ paper: elvisUI.menu }}
               elevation={0}
             >
-              <MenuItem component={Link} classes={{root: elvisUI.menuItem}} to='/services' onClick={() => {handleClose(); setValue(1)}}>Services</MenuItem>
-              <MenuItem component={Link} classes={{root: elvisUI.menuItem}} to='/customsoftware' onClick={() => {handleClose(); setValue(1)}}>Custom Software Development</MenuItem>
-              <MenuItem component={Link} classes={{root: elvisUI.menuItem}} to='/mobileapps' onClick={() => {handleClose(); setValue(1)}}>Mobile App Development</MenuItem>
-              <MenuItem component={Link} classes={{root: elvisUI.menuItem}} to='/websites' onClick={() => {handleClose(); setValue(1)}}>Website Development</MenuItem>
+              {menuOptions.map((option, i) => (
+                <MenuItem
+                  key={i}
+                  component={Link}
+                  selected={i === selectedIndex && value == 1}
+                  classes={{ root: elvisUI.menuItem }}
+                  to={option.link}
+                  onClick={(e) => {
+                    handleMenuItemClick(e, i);
+                    setValue(1);
+                    handleClose();
+                  }}
+                >
+                  {option.name}
+                </MenuItem>
+              ))}
             </Menu>
           </Toolbar>
         </AppBar>
