@@ -18,7 +18,13 @@ import {
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useTheme } from "@material-ui/core/styles";
-import { IconButton, List, SwipeableDrawer, ListItem ,ListItemText} from "@material-ui/core";
+import {
+  IconButton,
+  List,
+  SwipeableDrawer,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core";
 
 // For Inline styles with Material UI
 const useStyles = makeStyles((theme) => ({
@@ -85,6 +91,25 @@ const useStyles = makeStyles((theme) => ({
     height: "45px",
     width: "45px",
   },
+  drawer: {
+    backgroundColor: theme.palette.common.blue,
+  },
+  drawerItem: {
+    ...theme.typography.tab,
+    color: "#fff",
+    opacity: 0.7,
+  },
+  drawerItemEstimate: {
+    backgroundColor: theme.palette.common.orange,
+  },
+  drawerItemSelected: {
+    "& .MuiListItemText-root":{
+      opacity: 1
+    }
+  },
+  appbar: {
+    zIndex: theme.zIndex.modal + 1,
+  },
 }));
 
 // For Elevation
@@ -121,22 +146,61 @@ const Header = (props) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // Arrays for refactoring
   const menuOptions = [
     {
       name: "Services",
       link: "/services",
+      activeIndex: 1,
+      selectedIndex: 0,
     },
     {
       name: "Custom Software Development",
       link: "/customsoftware",
+      activeIndex: 1,
+      selectedIndex: 1,
     },
     {
       name: "Mobile App Development",
       link: "/mobileapps",
+      activeIndex: 1,
+      selectedIndex: 2,
     },
     {
       name: "Website Development",
       link: "/websites",
+      activeIndex: 1,
+      selectedIndex: 3,
+    },
+  ];
+  const routes = [
+    {
+      name: "Home",
+      link: "/",
+      activeIndex: 0,
+    },
+    {
+      name: "Services",
+      link: "/services",
+      activeIndex: 1,
+      ariaOwns: anchorEl && "simple-menu",
+      ariaHaspopups: anchorEl && true,
+      mouseOver: (e) => handleClick(e),
+    },
+    {
+      name: "The Revolution",
+      link: "/revolution",
+      activeIndex: 2,
+    },
+    {
+      name: "About Us",
+      link: "/about",
+      activeIndex: 3,
+    },
+    {
+      name: "Contact Us",
+      link: "/contact",
+      activeIndex: 4,
     },
   ];
 
@@ -164,60 +228,22 @@ const Header = (props) => {
 
   // UseEffect for routes
   useEffect(() => {
-    switch (window.location.pathname) {
-      case "/":
-        if (value !== 0) {
-          setValue(0);
-        }
-        break;
-      case "/services":
-        if (value !== 1) {
-          setValue(1);
-          setSelectedIndex(0);
-        }
-        break;
-      case "/revolution":
-        if (value !== 2) {
-          setValue(2);
-        }
-        break;
-      case "/about":
-        if (value !== 3) {
-          setValue(3);
-        }
-        break;
-      case "/contact":
-        if (value !== 4) {
-          setValue(4);
-        }
-        break;
-      case "/estimate":
-        if (value !== 5) {
-          setValue(5);
-        }
-        break;
-      case "/customsoftware":
-        if (value !== 1) {
-          setValue(1);
-          setSelectedIndex(1);
-        }
-        break;
-      case "/mobileapps":
-        if (value !== 1) {
-          setValue(1);
-          setSelectedIndex(2);
-        }
-        break;
-      case "/websites":
-        if (value !== 1) {
-          setValue(1);
-          setSelectedIndex(3);
-        }
-        break;
-      default:
-        break;
-    }
-  }, [value]);
+    [...menuOptions, ...routes].forEach((route) => {
+      const { link, activeIndex, selectedIndex } = route;
+      switch (window.location.pathname) {
+        case `${link}`:
+          if (value !== activeIndex) {
+            setValue(activeIndex);
+            if (selectedIndex && selectedIndex !== selectedIndex) {
+              setSelectedIndex(selectedIndex);
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }, [value, menuOptions, selectedIndex, routes]);
 
   // For Responsiveness
   const tabs = (
@@ -228,34 +254,21 @@ const Header = (props) => {
         indicatorColor="primary"
         className={elvisUI.tabContainer}
       >
-        <Tab component={Link} to="/" className={elvisUI.tab} label="Home" />
-        <Tab
-          aria-owns={anchorEl && "simple-menu"}
-          aria-haspopup={anchorEl && true}
-          onMouseOver={(e) => handleClick(e)}
-          component={Link}
-          to="/services"
-          className={elvisUI.tab}
-          label="Services"
-        />
-        <Tab
-          component={Link}
-          to="/revolution"
-          className={elvisUI.tab}
-          label="The Revolution"
-        />
-        <Tab
-          component={Link}
-          to="/about"
-          className={elvisUI.tab}
-          label="About Us"
-        />
-        <Tab
-          component={Link}
-          to="/contact"
-          className={elvisUI.tab}
-          label="Contact Us"
-        />
+        {routes.map((route, i) => {
+          const { name, link, ariaOwns, ariaHaspopups, mouseOver } = route;
+          return (
+            <Tab
+              key={`${route}${i}`}
+              className={elvisUI.tab}
+              to={link}
+              component={Link}
+              label={name}
+              aria-owns={ariaOwns}
+              aria-haspopup={ariaHaspopups}
+              onMouseOver={mouseOver}
+            />
+          );
+        })}
       </Tabs>
       <Button
         component={Link}
@@ -274,10 +287,12 @@ const Header = (props) => {
         MenuListProps={{ onMouseLeave: handleClose }}
         classes={{ paper: elvisUI.menu }}
         elevation={0}
+        keepMounted // For SEO Optimization
+        style={{zIndex: 1302}}
       >
         {menuOptions.map((option, i) => (
           <MenuItem
-            key={i}
+            key={`${option}${i}`}
             component={Link}
             selected={i === selectedIndex && value == 1}
             classes={{ root: elvisUI.menuItem }}
@@ -303,25 +318,53 @@ const Header = (props) => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
+        classes={{ paper: elvisUI.drawer }}
       >
+        <div className={elvisUI.toolbarMargin} />
         <List disablePadding>
-          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/'>
-            <ListItemText disableTypography >Home</ListItemText>
-          </ListItem>
-          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/services'>
-            <ListItemText disableTypography >Services</ListItemText>
-          </ListItem>
-          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/revolution'>
-            <ListItemText disableTypography >Revolution</ListItemText>
-          </ListItem>
-          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/about'>
-            <ListItemText disableTypography >About Us</ListItemText>
-          </ListItem>
-          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/contact'>
-            <ListItemText disableTypography >Contact Us</ListItemText>
-          </ListItem>
-          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/estimate'>
-            <ListItemText disableTypography >Free Estimate</ListItemText>
+          {routes.map((route) => {
+            const { name, activeIndex, link } = route;
+            return (
+              <ListItem
+                selected={value == activeIndex}
+                key={`${route}${activeIndex}`}
+                divider
+                button
+                component={Link}
+                to={link}
+                classes = {{selected: elvisUI.drawer}}
+                onClick={() => {
+                  setOpenDrawer(false);
+                  setValue(activeIndex);
+                }}
+              >
+                <ListItemText
+                  className={ elvisUI.drawerItem}
+                  disableTypography
+                >
+                  {name}
+                </ListItemText>
+              </ListItem>
+            );
+          })}
+          <ListItem
+            classes={{root: elvisUI.drawerItemEstimate, selected:elvisUI.drawerItemSelected}}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(5);
+            }}
+            divider
+            button
+            component={Link}
+            selected={value == 5}
+            to="/estimate"
+          >
+            <ListItemText
+              className={elvisUI.drawerItem}
+              disableTypography
+            >
+              Free Estimate
+            </ListItemText>
           </ListItem>
         </List>
       </SwipeableDrawer>
@@ -338,7 +381,7 @@ const Header = (props) => {
   return (
     <React.Fragment>
       <ElevationScroll>
-        <AppBar position="fixed">
+        <AppBar position="fixed" className={elvisUI.appbar}>
           <Toolbar disableGutters>
             <Button
               disableRipple
