@@ -1,28 +1,47 @@
 import React, { useState, useEffect } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import PropTypes from "prop-types";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { makeStyles } from "@material-ui/styles";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
-import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-
 import logo from "../../assets/logo.svg";
+import {
+  Tab,
+  Tabs,
+  Button,
+  Menu,
+  MenuItem,
+  AppBar,
+  Toolbar,
+} from "@material-ui/core";
+
+// For Responsiveness
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import MenuIcon from "@material-ui/icons/Menu";
+import { useTheme } from "@material-ui/core/styles";
+import { IconButton, List, SwipeableDrawer, ListItem ,ListItemText} from "@material-ui/core";
 
 // For Inline styles with Material UI
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
     marginBottom: "3em",
+    [theme.breakpoints.down("md")]: {
+      marginBottom: "2em",
+    },
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: "1.25em",
+    },
   },
   logo: {
     height: "8em",
     "&:hover": {
       background: "transparent",
+    },
+    [theme.breakpoints.down("md")]: {
+      height: "7em",
+    },
+    [theme.breakpoints.down("xs")]: {
+      height: "5.5em",
     },
   },
   tabContainer: {
@@ -56,6 +75,16 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
+  drawerIconContainer: {
+    marginLeft: "auto",
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+  drawerIcon: {
+    height: "45px",
+    width: "45px",
+  },
 }));
 
 // For Elevation
@@ -80,9 +109,16 @@ const Header = (props) => {
   // For Routes
   const [value, setValue] = useState(0);
 
+  // For Responsiveness
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [openDrawer, setOpenDrawer] = useState(false);
+  // For Swipeable Drawer
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   // For Menu
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const menuOptions = [
@@ -106,21 +142,21 @@ const Header = (props) => {
 
   const handleMenuItemClick = (e, index) => {
     setAnchorEl(null);
-    setOpen(false);
+    setOpenMenu(false);
     setSelectedIndex(index);
   };
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
-    setOpen(true);
+    setOpenMenu(true);
   };
   const handleClose = (e) => {
     setAnchorEl(null);
-    setOpen(false);
+    setOpenMenu(false);
   };
 
   // For Tabs
-  const handleChange = (e, value) => {
-    setValue(value);
+  const handleChange = (e, newValue) => {
+    setValue(newValue);
   };
 
   // Initializing custom selector for inline Material CSS.
@@ -183,6 +219,122 @@ const Header = (props) => {
     }
   }, [value]);
 
+  // For Responsiveness
+  const tabs = (
+    <>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor="primary"
+        className={elvisUI.tabContainer}
+      >
+        <Tab component={Link} to="/" className={elvisUI.tab} label="Home" />
+        <Tab
+          aria-owns={anchorEl && "simple-menu"}
+          aria-haspopup={anchorEl && true}
+          onMouseOver={(e) => handleClick(e)}
+          component={Link}
+          to="/services"
+          className={elvisUI.tab}
+          label="Services"
+        />
+        <Tab
+          component={Link}
+          to="/revolution"
+          className={elvisUI.tab}
+          label="The Revolution"
+        />
+        <Tab
+          component={Link}
+          to="/about"
+          className={elvisUI.tab}
+          label="About Us"
+        />
+        <Tab
+          component={Link}
+          to="/contact"
+          className={elvisUI.tab}
+          label="Contact Us"
+        />
+      </Tabs>
+      <Button
+        component={Link}
+        to="/estimate"
+        variant="contained"
+        color="secondary"
+        className={elvisUI.button}
+      >
+        Free Estimate
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        open={openMenu}
+        onClose={handleClose}
+        MenuListProps={{ onMouseLeave: handleClose }}
+        classes={{ paper: elvisUI.menu }}
+        elevation={0}
+      >
+        {menuOptions.map((option, i) => (
+          <MenuItem
+            key={i}
+            component={Link}
+            selected={i === selectedIndex && value == 1}
+            classes={{ root: elvisUI.menuItem }}
+            to={option.link}
+            onClick={(e) => {
+              handleMenuItemClick(e, i);
+              setValue(1);
+              handleClose();
+            }}
+          >
+            {option.name}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+
+  const drawer = (
+    <>
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+        onOpen={() => setOpenDrawer(true)}
+      >
+        <List disablePadding>
+          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/'>
+            <ListItemText disableTypography >Home</ListItemText>
+          </ListItem>
+          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/services'>
+            <ListItemText disableTypography >Services</ListItemText>
+          </ListItem>
+          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/revolution'>
+            <ListItemText disableTypography >Revolution</ListItemText>
+          </ListItem>
+          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/about'>
+            <ListItemText disableTypography >About Us</ListItemText>
+          </ListItem>
+          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/contact'>
+            <ListItemText disableTypography >Contact Us</ListItemText>
+          </ListItem>
+          <ListItem onClick={() => setOpenDrawer(false)} divider button component={Link} to='/estimate'>
+            <ListItemText disableTypography >Free Estimate</ListItemText>
+          </ListItem>
+        </List>
+      </SwipeableDrawer>
+      <IconButton
+        className={elvisUI.drawerIconContainer}
+        onClick={() => setOpenDrawer(!openDrawer)}
+        disableRipple
+      >
+        <MenuIcon className={elvisUI.drawerIcon} />
+      </IconButton>
+    </>
+  );
+
   return (
     <React.Fragment>
       <ElevationScroll>
@@ -197,81 +349,7 @@ const Header = (props) => {
             >
               <img className={elvisUI.logo} src={logo} alt="Logo" />
             </Button>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              indicatorColor="primary"
-              className={elvisUI.tabContainer}
-            >
-              <Tab
-                component={Link}
-                to="/"
-                className={elvisUI.tab}
-                label="Home"
-              />
-              <Tab
-                aria-owns={anchorEl && "simple-menu"}
-                aria-haspopup={anchorEl && true}
-                onMouseOver={(e) => handleClick(e)}
-                component={Link}
-                to="/services"
-                className={elvisUI.tab}
-                label="Services"
-              />
-              <Tab
-                component={Link}
-                to="/revolution"
-                className={elvisUI.tab}
-                label="The Revolution"
-              />
-              <Tab
-                component={Link}
-                to="/about"
-                className={elvisUI.tab}
-                label="About Us"
-              />
-              <Tab
-                component={Link}
-                to="/contact"
-                className={elvisUI.tab}
-                label="Contact Us"
-              />
-            </Tabs>
-            <Button
-              component={Link}
-              to="/estimate"
-              variant="contained"
-              color="secondary"
-              className={elvisUI.button}
-            >
-              Free Estimate
-            </Button>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{ onMouseLeave: handleClose }}
-              classes={{ paper: elvisUI.menu }}
-              elevation={0}
-            >
-              {menuOptions.map((option, i) => (
-                <MenuItem
-                  key={i}
-                  component={Link}
-                  selected={i === selectedIndex && value == 1}
-                  classes={{ root: elvisUI.menuItem }}
-                  to={option.link}
-                  onClick={(e) => {
-                    handleMenuItemClick(e, i);
-                    setValue(1);
-                    handleClose();
-                  }}
-                >
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Menu>
+            {(!matches && tabs) || drawer}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
