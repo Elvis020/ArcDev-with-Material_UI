@@ -103,9 +103,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.orange,
   },
   drawerItemSelected: {
-    "& .MuiListItemText-root":{
-      opacity: 1
-    }
+    "& .MuiListItemText-root": {
+      opacity: 1,
+    },
   },
   appbar: {
     zIndex: theme.zIndex.modal + 1,
@@ -131,8 +131,7 @@ ElevationScroll.propTypes = {
 };
 
 const Header = (props) => {
-  // For Routes
-  const [value, setValue] = useState(0);
+  const { selectedIndex, setSelectedIndex, value, setValue } = props;
 
   // For Responsiveness
   const theme = useTheme();
@@ -144,7 +143,6 @@ const Header = (props) => {
   // For Menu
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Arrays for refactoring
   const menuOptions = [
@@ -288,7 +286,7 @@ const Header = (props) => {
         classes={{ paper: elvisUI.menu }}
         elevation={0}
         keepMounted // For SEO Optimization
-        style={{zIndex: 1302}}
+        style={{ zIndex: 1302 }}
       >
         {menuOptions.map((option, i) => (
           <MenuItem
@@ -332,23 +330,23 @@ const Header = (props) => {
                 button
                 component={Link}
                 to={link}
-                classes = {{selected: elvisUI.drawer}}
+                classes={{ selected: elvisUI.drawer }}
                 onClick={() => {
                   setOpenDrawer(false);
                   setValue(activeIndex);
                 }}
               >
-                <ListItemText
-                  className={ elvisUI.drawerItem}
-                  disableTypography
-                >
+                <ListItemText className={elvisUI.drawerItem} disableTypography>
                   {name}
                 </ListItemText>
               </ListItem>
             );
           })}
           <ListItem
-            classes={{root: elvisUI.drawerItemEstimate, selected:elvisUI.drawerItemSelected}}
+            classes={{
+              root: elvisUI.drawerItemEstimate,
+              selected: elvisUI.drawerItemSelected,
+            }}
             onClick={() => {
               setOpenDrawer(false);
               setValue(5);
@@ -359,10 +357,7 @@ const Header = (props) => {
             selected={value == 5}
             to="/estimate"
           >
-            <ListItemText
-              className={elvisUI.drawerItem}
-              disableTypography
-            >
+            <ListItemText className={elvisUI.drawerItem} disableTypography>
               Free Estimate
             </ListItemText>
           </ListItem>
