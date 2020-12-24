@@ -254,11 +254,12 @@ const Footer = (props) => {
         spacing={2}
         className={elvisUI.socialContainer}
       >
-        {socialMediaInfo.map((sc) => {
+        {socialMediaInfo.map((sc,index) => {
           const { svg, link, name } = sc;
           return (
             <Grid
               item
+              key={index}
               component={"a"}
               href={link}
               rel="noopener noreferrer"

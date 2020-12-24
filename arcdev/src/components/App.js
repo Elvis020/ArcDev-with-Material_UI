@@ -4,6 +4,7 @@ import theme from "./ui/Theme";
 import { Switch, Route } from "react-router-dom";
 
 import { Header, Footer } from "./ui";
+import LandingPage from './LandingPage';
 
 function App() {
   // For Routes
@@ -14,7 +15,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Header value={value}  setValue={setValue} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
       <Switch>
-        <Route exact path="/"  component={() => <div style={{height: "1000px"}}>Home</div>} />
+        <Route exact path="/"  component={LandingPage} />
         <Route path="/services" component={() => <div>Services</div>} />
         <Route
           path="/customsoftware"
