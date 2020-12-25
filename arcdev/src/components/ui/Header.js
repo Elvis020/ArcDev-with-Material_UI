@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "25px",
     height: "45px",
     cursor: "pointer",
+    "&:hover" :{
+      backgroundColor: theme.palette.secondary.light
+  }
   },
   logoContainer: {
     padding: 0,
@@ -101,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerItemEstimate: {
     backgroundColor: theme.palette.common.orange,
+
   },
   drawerItemSelected: {
     "& .MuiListItemText-root": {

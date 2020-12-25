@@ -18,18 +18,34 @@ export default createMuiTheme({
     },
   },
   typography: {
-    tab:{
-      fontFamily: 'Raleway',
+    tab: {
+      fontFamily: "Raleway",
       fontWeight: 700,
-      fontSize: '1rem',
-      textTransform: 'none',
+      fontSize: "1rem",
+      textTransform: "none",
     },
-    estimate:{
+    estimate: {
       fontFamily: "Pacifico",
-      fontSize:"1rem",
-      textTransform: 'none',
-      color:'#fff',
-    }
+      fontSize: "1rem",
+      textTransform: "none",
+      color: "#fff",
+    },
+    h2: {
+      fontFamily: "Raleway",
+      fontWeight: 600,
+      fontSize: "2.5rem",
+      color: `${arcBlue}`,
+      lineHeight: 1.3,
+    },
+    h3: {
+      fontFamily: "Pacifico",
+      fontSize: "2.5rem",
+      color: `${arcBlue}`,
+    },
+    h4: {
+      fontFamily: "Pacifico",
+      fontSize: "1.75rem",
+      color: `${arcBlue}`,
+    },
   },
-  
 });
