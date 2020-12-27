@@ -10,6 +10,7 @@ import customSoftwareIcon from "../assets/Custom_Software_Icon.svg";
 import mobileAppsIcon from "../assets/mobileIcon.svg";
 import websitesIcon from "../assets/websiteIcon.svg";
 import revolutionBackgroundImg from "../assets/repeatingBackground.svg";
+import infoBackgroundImg from "../assets/infoBackground.svg";
 
 // Setting up useStyles
 const useStyles = makeStyles((theme) => ({
@@ -107,11 +108,19 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[10],
     borderRadius: 15,
     padding: "6em",
-    [theme.breakpoints.down("sm")]:{
-      padding: '8em 0',
+    [theme.breakpoints.down("sm")]: {
+      padding: "8em 0",
       borderRadius: 0,
-      width: '100%'
-    }
+      width: "100%",
+    },
+  },
+  infoBackground: {
+    backgroundImage: `url(${infoBackgroundImg})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
   },
 }));
 
@@ -120,6 +129,7 @@ const LandingPage = () => {
   const theme = useTheme();
   // For media queries
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   // For react-lottie
   const defaultOptions = {
@@ -301,10 +311,11 @@ const LandingPage = () => {
       </Grid>
 
       {/* Revolution Block */}
+
       <Grid item>
         <Grid
           container
-          style={{ height: "50em",marginTop:'12em' }}
+          style={{ height: "45em", marginTop: "12em" }}
           alignItems="center"
           justify="center"
         >
@@ -340,6 +351,57 @@ const LandingPage = () => {
           </Card>
           <div className={elvisUI.revolutionBackground} />
         </Grid>
+      </Grid>
+
+      {/* Information Block */}
+      <Grid
+        container
+        alignItems="center"
+        style={{ height: "40em" }}
+        direction="row"
+      >
+        <Grid style={{position: "absolute", textAlign: matchesXS ? 'center' : 'inherit'}} item container spacing={matchesXS ? 10:0} direction={matchesXS ? 'column' : 'row'} >
+
+        {/* About Us I */}
+        <Grid sm style={{marginLeft: matchesXS ? 0 : matchesSM ? "1.5em": "5em" }} item>
+          <Grid container direction="column">
+            <Typography style={{ color: "#fff" }} variant="h2">
+              About Us
+            </Typography>
+            <Typography variant="subtitle2">Lets get personal</Typography>
+            <Grid item>
+              <Button
+                variant="outlined"
+                style={{ color: "#fff", borderColor: "#fff" }}
+                className={elvisUI.learnButton}
+              >
+                <span style={{ marginRight: 6 }}> Learn More </span>
+                <ButtonArrow width={10} height={10} fill="#fff" />
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        {/* About Us II */}
+        <Grid sm style={{marginRight: matchesXS ? 0 : matchesSM ? "1.5em":"5em", textAlign:matchesXS ? 'center' : 'right' }} item>
+          <Grid container direction="column">
+            <Typography style={{ color: "#fff" }} variant="h2">
+              Contact Us
+            </Typography>
+            <Typography variant="subtitle2">Say hello! <span role='img' aria-label='waving hand' >👋🏿</span> </Typography>
+            <Grid item>
+              <Button
+                variant="outlined"
+                style={{ color: "#fff", borderColor: "#fff" }}
+                className={elvisUI.learnButton}
+              >
+                <span style={{ marginRight: 6 }}> Learn More </span>
+                <ButtonArrow width={10} height={10} fill="#fff" />
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        </Grid>
+        <div className={elvisUI.infoBackground} />
       </Grid>
     </Grid>
   );
