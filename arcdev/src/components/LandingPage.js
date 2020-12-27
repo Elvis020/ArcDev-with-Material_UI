@@ -1,6 +1,8 @@
 import React from "react";
 import Lottie from "react-lottie";
 import { makeStyles, useTheme } from "@material-ui/styles";
+import {Link} from 'react-router-dom';
+
 import { Grid, Button, Typography, Card, CardContent } from "@material-ui/core";
 import animationData from "../animations/landingAnimation/data";
 import { ButtonArrow, CallToAction } from "../components/ui";
@@ -124,7 +126,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LandingPage = () => {
+const LandingPage = (props) => {
+  const {setValue, setSelectedIndex} = props;
   const elvisUI = useStyles();
   const theme = useTheme();
   // For media queries
@@ -158,12 +161,24 @@ const LandingPage = () => {
               container
             >
               <Grid item>
-                <Button className={elvisUI.estimateButton} variant="contained">
+                <Button
+                  component={Link}
+                  to="/estimate"
+                  onClick={() => setValue(5)}
+                  className={elvisUI.estimateButton}
+                  variant="contained"
+                >
                   Free Estimate
                 </Button>
               </Grid>
               <Grid item>
-                <Button className={elvisUI.learnButtonHero} variant="outlined">
+                <Button
+                  component={Link}
+                  to="/revolution"
+                  onClick={() => setValue(2)}
+                  className={elvisUI.learnButtonHero}
+                  variant="outlined"
+                >
                   <span style={{ marginRight: 6 }}> Learn More </span>
                   <ButtonArrow
                     width={15}
@@ -206,7 +221,13 @@ const LandingPage = () => {
               Complete digital solutions, from investigation to{" "}
               <span className={elvisUI.specialText}>celebration.</span>
             </Typography>
-            <Button variant="outlined" className={elvisUI.learnButton}>
+            <Button
+              component={Link}
+              to="/customsoftware"
+              variant="outlined"
+              onClick={() => {setValue(1); setSelectedIndex(0);}}
+              className={elvisUI.learnButton}
+            >
               <span style={{ marginRight: 6 }}> Learn More </span>
               <ButtonArrow
                 width={10}
@@ -248,7 +269,13 @@ const LandingPage = () => {
               Integrate your web experience or create a standalone app{" "}
               {!matchesSM && <br />}with either mobile platform
             </Typography>
-            <Button variant="outlined" className={elvisUI.learnButton}>
+            <Button
+              component={Link}
+              to="/mobileapps"
+              variant="outlined"
+              onClick={() => {setValue(1); setSelectedIndex(1);}}
+              className={elvisUI.learnButton}
+            >
               <span style={{ marginRight: 6 }}> Learn More </span>
               <ButtonArrow
                 width={10}
@@ -262,7 +289,7 @@ const LandingPage = () => {
             <img
               className={elvisUI.icon}
               src={mobileAppsIcon}
-              alt="MObile Phone Icon"
+              alt="Mobile Phone Icon"
             />
           </Grid>
         </Grid>
@@ -290,7 +317,13 @@ const LandingPage = () => {
             <Typography style={{ marginBottom: "1em" }} variant="subtitle1">
               Optimized for Search Engines, built for speed{" "}
             </Typography>
-            <Button variant="outlined" className={elvisUI.learnButton}>
+            <Button
+              component={Link}
+              to="/websites"
+              variant="outlined"
+              onClick={() => {setValue(1); setSelectedIndex(2);}}
+              className={elvisUI.learnButton}
+            >
               <span style={{ marginRight: 6 }}> Learn More </span>
               <ButtonArrow
                 width={10}
@@ -337,6 +370,9 @@ const LandingPage = () => {
                   <Button
                     className={elvisUI.learnButtonHero}
                     variant="outlined"
+                    onClick={() => setValue(2)}
+                    component={Link}
+                    to="/revolution"
                   >
                     <span style={{ marginRight: 6 }}> Learn More </span>
                     <ButtonArrow
@@ -364,7 +400,6 @@ const LandingPage = () => {
           style={{
             position: "absolute",
             textAlign: matchesXS ? "center" : "inherit",
-            
           }}
           item
           container
@@ -384,7 +419,10 @@ const LandingPage = () => {
               <Typography variant="subtitle2">Lets get personal</Typography>
               <Grid item>
                 <Button
+                  component={Link}
+                  to="/about"
                   variant="outlined"
+                  onClick={() => setValue(3)}
                   style={{ color: "#fff", borderColor: "#fff" }}
                   className={elvisUI.learnButton}
                 >
@@ -416,6 +454,9 @@ const LandingPage = () => {
               </Typography>
               <Grid item>
                 <Button
+                component={Link}
+                to='/contact'
+                onClick={() => setValue(4)}
                   variant="outlined"
                   style={{ color: "#fff", borderColor: "#fff" }}
                   className={elvisUI.learnButton}
@@ -432,7 +473,7 @@ const LandingPage = () => {
 
       {/* CallToAction Block */}
       <Grid item>
-        <CallToAction />
+        <CallToAction setValue={setValue} />
       </Grid>
     </Grid>
   );

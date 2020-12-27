@@ -1,10 +1,10 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./ui/Theme";
 import { Switch, Route } from "react-router-dom";
 
 import { Header, Footer } from "./ui";
-import LandingPage from './LandingPage';
+import LandingPage from "./LandingPage";
 
 function App() {
   // For Routes
@@ -13,9 +13,24 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header value={value}  setValue={setValue} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+      <Header
+        value={value}
+        setValue={setValue}
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
+      />
       <Switch>
-        <Route exact path="/"  component={LandingPage} />
+        <Route
+          exact
+          path="/"
+          render={(props) => (
+            <LandingPage
+              {...props}
+              setValue={setValue}
+              setSelectedIndex={setSelectedIndex}
+            />
+          )}
+        />
         <Route path="/services" component={() => <div>Services</div>} />
         <Route
           path="/customsoftware"
@@ -28,7 +43,7 @@ function App() {
         <Route path="/contact" component={() => <div>Contact Us</div>} />
         <Route path="/estimate" component={() => <div>Estimate</div>} />
       </Switch>
-      <Footer value={value}  setValue={setValue} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+      <Footer setValue={setValue} setSelectedIndex={setSelectedIndex} />
     </ThemeProvider>
   );
 }

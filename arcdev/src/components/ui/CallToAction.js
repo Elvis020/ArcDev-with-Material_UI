@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import { Grid, Button, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import ButtonArrow from "./ButtonArrow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   background: {
     backgroundImage: `url(${background})`,
     backgroundPosition: "center",
-    backgroundAttachment: 'fixed',
+    backgroundAttachment: "fixed",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "45em",
@@ -27,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       backgroundImage: `url(${mobileBackground})`,
     },
-},
-estimateButton: {
+  },
+  estimateButton: {
     ...theme.typography.estimate,
     borderRadius: 50,
     height: 80,
@@ -37,17 +38,17 @@ estimateButton: {
     marginRight: "5em",
     marginLeft: "1em",
     "&:hover": {
-        backgroundColor: theme.palette.secondary.light,
+      backgroundColor: theme.palette.secondary.light,
     },
     [theme.breakpoints.down("sm")]: {
-        marginTop:"3em",
-        marginRight: 0,
-        marginLeft: 0,
+      marginTop: "3em",
+      marginRight: 0,
+      marginLeft: 0,
     },
   },
 }));
 
-const CallToAction = () => {
+const CallToAction = ({ setValue }) => {
   const elvisUI = useStyles();
   const theme = useTheme();
 
@@ -57,11 +58,17 @@ const CallToAction = () => {
     <Grid
       container
       alignItems="center"
-      justify={matchesSM ? 'center' : "space-between"}
+      justify={matchesSM ? "center" : "space-between"}
       className={elvisUI.background}
-      direction={matchesSM ? 'column' : 'row'}
+      direction={matchesSM ? "column" : "row"}
     >
-      <Grid item style={{ marginLeft: matchesSM ? 0: "5em", textAlign: matchesSM ? 'center': 'inherit' }}>
+      <Grid
+        item
+        style={{
+          marginLeft: matchesSM ? 0 : "5em",
+          textAlign: matchesSM ? "center" : "inherit",
+        }}
+      >
         <Grid container direction="column">
           <Grid item>
             <Typography variant="h2">
@@ -70,8 +77,14 @@ const CallToAction = () => {
             <Typography style={{ fontSize: "1.5rem" }} variant="subtitle2">
               Take advatage of the 21st century{" "}
             </Typography>
-            <Grid justify={matchesSM &&  'center'} item container>
-              <Button variant="outlined" className={elvisUI.learnButton}>
+            <Grid justify={matchesSM && "center"} item container>
+              <Button
+                onClick={() => setValue(2)}
+                component={Link}
+                to="/revolution"
+                variant="outlined"
+                className={elvisUI.learnButton}
+              >
                 <span style={{ marginRight: 6 }}> Learn More </span>
                 <ButtonArrow
                   width={10}
@@ -85,7 +98,13 @@ const CallToAction = () => {
       </Grid>
 
       <Grid item>
-        <Button variant="contained" className={elvisUI.estimateButton}>
+        <Button
+          onClick={() => setValue(5)}
+          component={Link}
+          to="/estimate"
+          variant="contained"
+          className={elvisUI.estimateButton}
+        >
           Free Estimate
         </Button>
       </Grid>
