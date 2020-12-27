@@ -2,13 +2,14 @@ import React from "react";
 import Lottie from "react-lottie";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import animationData from "../animations/landingAnimation/data";
-import { Grid, Button, Typography } from "@material-ui/core";
+import { Grid, Button, Typography, Card, CardContent } from "@material-ui/core";
 import { ButtonArrow } from "../components/ui";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import customSoftwareIcon from "../assets/Custom_Software_Icon.svg";
 import mobileAppsIcon from "../assets/mobileIcon.svg";
 import websitesIcon from "../assets/websiteIcon.svg";
+import revolutionBackgroundImg from "../assets/repeatingBackground.svg";
 
 // Setting up useStyles
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +93,25 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "4em",
       padding: 25,
     },
+  },
+  revolutionBackground: {
+    backgroundImage: `url(${revolutionBackgroundImg})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
+  },
+  revolutionCard: {
+    position: "absolute",
+    boxShadow: theme.shadows[10],
+    borderRadius: 15,
+    padding: "6em",
+    [theme.breakpoints.down("sm")]:{
+      padding: '8em 0',
+      borderRadius: 0,
+      width: '100%'
+    }
   },
 }));
 
@@ -277,6 +297,48 @@ const LandingPage = () => {
               alt="Website Icon"
             />
           </Grid>
+        </Grid>
+      </Grid>
+
+      {/* Revolution Block */}
+      <Grid item>
+        <Grid
+          container
+          style={{ height: "50em",marginTop:'12em' }}
+          alignItems="center"
+          justify="center"
+        >
+          <Card className={elvisUI.revolutionCard}>
+            <CardContent>
+              <Grid
+                container
+                style={{ textAlign: "center" }}
+                direction="column"
+              >
+                <Grid item>
+                  <Typography variant="h3">The Revolution</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle1">
+                    Visionary insights coupled with cutting-edge technology is a
+                    recipe for revolution.
+                  </Typography>
+                  <Button
+                    className={elvisUI.learnButtonHero}
+                    variant="outlined"
+                  >
+                    <span style={{ marginRight: 6 }}> Learn More </span>
+                    <ButtonArrow
+                      width={15}
+                      height={15}
+                      fill={theme.palette.common.blue}
+                    />
+                  </Button>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+          <div className={elvisUI.revolutionBackground} />
         </Grid>
       </Grid>
     </Grid>
