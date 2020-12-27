@@ -241,6 +241,8 @@ const Header = (props) => {
             }
           }
           break;
+        case '/estimate':
+          setValue(5)
         default:
           break;
       }
@@ -278,6 +280,7 @@ const Header = (props) => {
         variant="contained"
         color="secondary"
         className={elvisUI.button}
+        onClick={() => setValue(5)}
       >
         Free Estimate
       </Button>

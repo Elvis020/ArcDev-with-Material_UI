@@ -1,9 +1,9 @@
 import React from "react";
 import Lottie from "react-lottie";
 import { makeStyles, useTheme } from "@material-ui/styles";
-import animationData from "../animations/landingAnimation/data";
 import { Grid, Button, Typography, Card, CardContent } from "@material-ui/core";
-import { ButtonArrow } from "../components/ui";
+import animationData from "../animations/landingAnimation/data";
+import { ButtonArrow, CallToAction } from "../components/ui";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import customSoftwareIcon from "../assets/Custom_Software_Icon.svg";
@@ -360,48 +360,79 @@ const LandingPage = () => {
         style={{ height: "40em" }}
         direction="row"
       >
-        <Grid style={{position: "absolute", textAlign: matchesXS ? 'center' : 'inherit'}} item container spacing={matchesXS ? 10:0} direction={matchesXS ? 'column' : 'row'} >
-
-        {/* About Us I */}
-        <Grid sm style={{marginLeft: matchesXS ? 0 : matchesSM ? "1.5em": "5em" }} item>
-          <Grid container direction="column">
-            <Typography style={{ color: "#fff" }} variant="h2">
-              About Us
-            </Typography>
-            <Typography variant="subtitle2">Lets get personal</Typography>
-            <Grid item>
-              <Button
-                variant="outlined"
-                style={{ color: "#fff", borderColor: "#fff" }}
-                className={elvisUI.learnButton}
-              >
-                <span style={{ marginRight: 6 }}> Learn More </span>
-                <ButtonArrow width={10} height={10} fill="#fff" />
-              </Button>
+        <Grid
+          style={{
+            position: "absolute",
+            textAlign: matchesXS ? "center" : "inherit",
+            
+          }}
+          item
+          container
+          // spacing={matchesXS ? 3 : 0}
+          direction={matchesXS ? "column" : "row"}
+        >
+          {/* About Us I */}
+          <Grid
+            sm
+            style={{ marginLeft: matchesXS ? 0 : matchesSM ? "1.5em" : "5em" }}
+            item
+          >
+            <Grid container direction="column">
+              <Typography style={{ color: "#fff" }} variant="h2">
+                About Us
+              </Typography>
+              <Typography variant="subtitle2">Lets get personal</Typography>
+              <Grid item>
+                <Button
+                  variant="outlined"
+                  style={{ color: "#fff", borderColor: "#fff" }}
+                  className={elvisUI.learnButton}
+                >
+                  <span style={{ marginLeft: 6 }}> Learn More </span>
+                  <ButtonArrow width={10} height={10} fill="#fff" />
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        {/* About Us II */}
-        <Grid sm style={{marginRight: matchesXS ? 0 : matchesSM ? "1.5em":"5em", textAlign:matchesXS ? 'center' : 'right' }} item>
-          <Grid container direction="column">
-            <Typography style={{ color: "#fff" }} variant="h2">
-              Contact Us
-            </Typography>
-            <Typography variant="subtitle2">Say hello! <span role='img' aria-label='waving hand' >👋🏿</span> </Typography>
-            <Grid item>
-              <Button
-                variant="outlined"
-                style={{ color: "#fff", borderColor: "#fff" }}
-                className={elvisUI.learnButton}
-              >
-                <span style={{ marginRight: 6 }}> Learn More </span>
-                <ButtonArrow width={10} height={10} fill="#fff" />
-              </Button>
+          {/* About Us II */}
+          <Grid
+            sm
+            style={{
+              marginRight: matchesXS ? 0 : matchesSM ? "1.5em" : "5em",
+              marginTop: matchesXS && "1.5em",
+              textAlign: matchesXS ? "center" : "right",
+            }}
+            item
+          >
+            <Grid container direction="column">
+              <Typography style={{ color: "#fff" }} variant="h2">
+                Contact Us
+              </Typography>
+              <Typography variant="subtitle2">
+                Say hello!
+                <span role="img" aria-label="waving hand">
+                  👋🏿
+                </span>{" "}
+              </Typography>
+              <Grid item>
+                <Button
+                  variant="outlined"
+                  style={{ color: "#fff", borderColor: "#fff" }}
+                  className={elvisUI.learnButton}
+                >
+                  <span style={{ marginRight: 6 }}> Learn More </span>
+                  <ButtonArrow width={10} height={10} fill="#fff" />
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
         </Grid>
         <div className={elvisUI.infoBackground} />
+      </Grid>
+
+      {/* CallToAction Block */}
+      <Grid item>
+        <CallToAction />
       </Grid>
     </Grid>
   );
