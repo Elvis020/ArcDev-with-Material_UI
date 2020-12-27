@@ -133,7 +133,7 @@ const Footer = (props) => {
                 to="/mobileapps"
                 className={elvisUI.link}
               >
-                Mobile App Development
+                iOS/Android App Development
               </Grid>
               <Grid
                 component={Link}
@@ -254,7 +254,7 @@ const Footer = (props) => {
         spacing={2}
         className={elvisUI.socialContainer}
       >
-        {socialMediaInfo.map((sc,index) => {
+        {socialMediaInfo.map((sc, index) => {
           const { svg, link, name } = sc;
           return (
             <Grid

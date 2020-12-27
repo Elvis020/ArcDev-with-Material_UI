@@ -4,8 +4,11 @@ import { makeStyles, useTheme } from "@material-ui/styles";
 import animationData from "../animations/landingAnimation/data";
 import { Grid, Button, Typography } from "@material-ui/core";
 import { ButtonArrow } from "../components/ui";
-import customSoftwareIcon from "../assets/Custom_Software_Icon.svg";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+
+import customSoftwareIcon from "../assets/Custom_Software_Icon.svg";
+import mobileAppsIcon from "../assets/mobileIcon.svg";
+import websitesIcon from "../assets/websiteIcon.svg";
 
 // Setting up useStyles
 const useStyles = makeStyles((theme) => ({
@@ -77,8 +80,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   serviceContainer: {
+    marginTop: "9em",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "4em",
+      padding: 25,
+    },
+  },
+  serviceContainer1: {
     marginTop: "12em",
     [theme.breakpoints.down("sm")]: {
+      marginTop: "4em",
       padding: 25,
     },
   },
@@ -141,13 +152,13 @@ const LandingPage = () => {
         </Grid>
       </Grid>
 
-      {/* ------ Services Block ------- */}
-      <Grid item style={{ margin: "0 1em" }}>
+      {/* ------ Custom Software Block ------- */}
+      <Grid item style={{ margin: "0 0.5em" }}>
         <Grid
           container
           justify={matchesSM && "center"}
           direction="row"
-          className={elvisUI.serviceContainer}
+          className={elvisUI.serviceContainer1}
         >
           {/* First Item */}
           <Grid
@@ -180,6 +191,90 @@ const LandingPage = () => {
               className={elvisUI.icon}
               src={customSoftwareIcon}
               alt="Custom software Icon"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* ------ iOS/Android App Development Block------- */}
+      <Grid item style={{ margin: "0 0.5em" }}>
+        <Grid
+          container
+          justify={(matchesSM && "center") || "flex-end"}
+          direction="row"
+          className={elvisUI.serviceContainer}
+        >
+          {/* First Item */}
+          <Grid
+            item
+            style={{
+              textAlign: matchesSM && "center",
+            }}
+          >
+            <Typography variant="h4">iOS/Android App Development</Typography>
+            <Typography variant="subtitle1" className={elvisUI.subtitle}>
+              Extend functionality. Extend Access. Increase Engagement
+            </Typography>
+            <Typography style={{ marginBottom: "1em" }} variant="subtitle1">
+              Integrate your web experience or create a standalone app{" "}
+              {!matchesSM && <br />}with either mobile platform
+            </Typography>
+            <Button variant="outlined" className={elvisUI.learnButton}>
+              <span style={{ marginRight: 6 }}> Learn More </span>
+              <ButtonArrow
+                width={10}
+                height={10}
+                fill={theme.palette.common.blue}
+              />
+            </Button>
+          </Grid>
+          {/* Second Icon */}
+          <Grid item style={{ marginRight: matchesSM ? 0 : "5em" }}>
+            <img
+              className={elvisUI.icon}
+              src={mobileAppsIcon}
+              alt="MObile Phone Icon"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* ------ Websites Block------- */}
+      <Grid item style={{ margin: "0 0.5em" }}>
+        <Grid
+          container
+          justify={matchesSM && "center"}
+          direction="row"
+          className={elvisUI.serviceContainer}
+        >
+          {/* First Item */}
+          <Grid
+            item
+            style={{
+              marginLeft: matchesSM ? 0 : "5em",
+              textAlign: matchesSM && "center",
+            }}
+          >
+            <Typography variant="h4">WebsiteDevelopment</Typography>
+            <Typography variant="subtitle1" className={elvisUI.subtitle}>
+              Reach More. Discover More. Sell More.
+            </Typography>
+            <Typography style={{ marginBottom: "1em" }} variant="subtitle1">
+              Optimized for Search Engines, built for speed{" "}
+            </Typography>
+            <Button variant="outlined" className={elvisUI.learnButton}>
+              <span style={{ marginRight: 6 }}> Learn More </span>
+              <ButtonArrow
+                width={10}
+                height={10}
+                fill={theme.palette.common.blue}
+              />
+            </Button>
+          </Grid>
+          {/* Third Icon */}
+          <Grid item>
+            <img
+              className={elvisUI.icon}
+              src={websitesIcon}
+              alt="Website Icon"
             />
           </Grid>
         </Grid>
