@@ -1,7 +1,7 @@
 import React from "react";
 import Lottie from "react-lottie";
 import { makeStyles, useTheme } from "@material-ui/styles";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import { Grid, Button, Typography, Card, CardContent } from "@material-ui/core";
 import animationData from "../animations/landingAnimation/data";
@@ -127,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LandingPage = (props) => {
-  const {setValue, setSelectedIndex} = props;
+  const { setValue, setSelectedIndex } = props;
   const elvisUI = useStyles();
   const theme = useTheme();
   // For media queries
@@ -225,7 +225,10 @@ const LandingPage = (props) => {
               component={Link}
               to="/customsoftware"
               variant="outlined"
-              onClick={() => {setValue(1); setSelectedIndex(0);}}
+              onClick={() => {
+                setValue(1);
+                setSelectedIndex(0);
+              }}
               className={elvisUI.learnButton}
             >
               <span style={{ marginRight: 6 }}> Learn More </span>
@@ -273,7 +276,10 @@ const LandingPage = (props) => {
               component={Link}
               to="/mobileapps"
               variant="outlined"
-              onClick={() => {setValue(1); setSelectedIndex(1);}}
+              onClick={() => {
+                setValue(1);
+                setSelectedIndex(1);
+              }}
               className={elvisUI.learnButton}
             >
               <span style={{ marginRight: 6 }}> Learn More </span>
@@ -321,7 +327,10 @@ const LandingPage = (props) => {
               component={Link}
               to="/websites"
               variant="outlined"
-              onClick={() => {setValue(1); setSelectedIndex(2);}}
+              onClick={() => {
+                setValue(1);
+                setSelectedIndex(2);
+              }}
               className={elvisUI.learnButton}
             >
               <span style={{ marginRight: 6 }}> Learn More </span>
@@ -412,7 +421,11 @@ const LandingPage = (props) => {
             style={{ marginLeft: matchesXS ? 0 : matchesSM ? "1.5em" : "5em" }}
             item
           >
-            <Grid container direction="column">
+            <Grid
+              style={{ marginBottom: matchesXS ? "5em" : 0 }}
+              container
+              direction="column"
+            >
               <Typography style={{ color: "#fff" }} variant="h2">
                 About Us
               </Typography>
@@ -454,9 +467,9 @@ const LandingPage = (props) => {
               </Typography>
               <Grid item>
                 <Button
-                component={Link}
-                to='/contact'
-                onClick={() => setValue(4)}
+                  component={Link}
+                  to="/contact"
+                  onClick={() => setValue(4)}
                   variant="outlined"
                   style={{ color: "#fff", borderColor: "#fff" }}
                   className={elvisUI.learnButton}
