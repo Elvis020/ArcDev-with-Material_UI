@@ -6,6 +6,7 @@ import { Switch, Route } from "react-router-dom";
 import { Header, Footer } from "./ui";
 import LandingPage from "./LandingPage";
 import Services from "./Services";
+import CustomSoftware from "./CustomSoftware";
 
 function App() {
   // For Routes
@@ -44,7 +45,7 @@ function App() {
         />
         <Route
           path="/customsoftware"
-          component={() => <div>Custom Software</div>}
+          render={(props) => <CustomSoftware {...props} setValue={setValue} setSelectedIndex={setSelectedIndex}/>}
         />
         <Route path="/mobileapps" component={() => <div>Mobile Apps</div>} />
         <Route path="/websites" component={() => <div>Websites</div>} />
