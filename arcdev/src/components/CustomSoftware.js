@@ -94,7 +94,7 @@ const CustomSoftware = (props) => {
     <Grid item direction='row'>
       <Grid item container direction='column'>
         <Grid item>
-          <Typography>Saev Energy</Typography>
+          <Typography variant='h4'>Save Energy</Typography>
         </Grid>
       </Grid>
     </Grid>
