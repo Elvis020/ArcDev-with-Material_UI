@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 
 import { Header, Footer } from "./ui";
 import LandingPage from "./LandingPage";
+import Services from "./Services";
 
 function App() {
   // For Routes
@@ -31,7 +32,16 @@ function App() {
             />
           )}
         />
-        <Route path="/services" component={() => <div>Services</div>} />
+        <Route
+          path="/services"
+          render={(props) => (
+            <Services
+              {...props}
+              setValue={setValue}
+              setSelectedIndex={setSelectedIndex}
+            />
+          )}
+        />
         <Route
           path="/customsoftware"
           component={() => <div>Custom Software</div>}
