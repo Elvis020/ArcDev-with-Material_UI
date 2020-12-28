@@ -45,17 +45,7 @@ function App() {
         />
         <Route
           path="/customsoftware"
-<<<<<<< HEAD
           render={(props) => <CustomSoftware {...props} setValue={setValue} setSelectedIndex={setSelectedIndex}/>}
-=======
-          render={(props) => (
-            <CustomSoftware
-              {...props}
-              setValue={setValue}
-              setSelectedIndex={setSelectedIndex}
-            />
-          )}
->>>>>>> ad8d05f701bad636ab7044cc66163a937bf92a89
         />
         <Route path="/mobileapps" component={() => <div>Mobile Apps</div>} />
         <Route path="/websites" component={() => <div>Websites</div>} />
