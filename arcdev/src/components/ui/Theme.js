@@ -59,6 +59,11 @@ export default createMuiTheme({
       fontWeight: 300,
       color: "#fff",
     },
+    body1: {
+      fontSize: "1.25rem",
+      color: arcGrey,
+      fontWeight: 300,
+    },
     body2: {
       fontSize: "1.25rem",
       color: arcGrey,
